@@ -58,7 +58,6 @@ class ModernSearchApp {
 
     initializeLanguage() {
         // Set English as default language
-        document.getElementById('languageSelect').value = 'en';
         this.switchLanguage('en');
     }
 
@@ -149,10 +148,23 @@ class ModernSearchApp {
             this.performSearch(this.currentPage);
         });
 
-        // Language selector
-        document.getElementById('languageSelect').addEventListener('change', (e) => {
-            this.switchLanguage(e.target.value);
-        });
+        // Burger menu functionality
+        const burgerBtn = document.getElementById('burgerBtn');
+        const burgerDropdown = document.getElementById('burgerDropdown');
+        
+        if (burgerBtn && burgerDropdown) {
+            burgerBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                burgerDropdown.classList.toggle('show');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!burgerBtn.contains(e.target) && !burgerDropdown.contains(e.target)) {
+                    burgerDropdown.classList.remove('show');
+                }
+            });
+        }
 
         // Availability filters
         document.getElementById('availableOnly').addEventListener('change', (e) => {
