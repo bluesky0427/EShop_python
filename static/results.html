@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market.gr - Compare Prices</title>
+    <title>Search Results - Market.gr</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.css" rel="stylesheet">
@@ -36,7 +36,7 @@
             line-height: 1.6;
         }
 
-        /* Header Styles */
+        /* Header Styles - Same as homepage */
         .main-header {
             background: var(--background-color);
             padding: 12px 0;
@@ -106,7 +106,6 @@
             background: var(--secondary-blue);
         }
 
-        /* Burger Menu */
         .burger-menu {
             position: relative;
         }
@@ -163,61 +162,53 @@
             color: var(--primary-blue);
         }
 
-        /* Search Suggestions */
-        .suggestions-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--background-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-height: 300px;
-            overflow-y: auto;
-            z-index: 1000;
-            display: none;
-            margin-top: 4px;
-        }
-
-        .suggestion-item {
-            padding: 12px 20px;
-            cursor: pointer;
-            border-bottom: 1px solid #f3f4f6;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: background-color 0.3s ease;
-        }
-
-        .suggestion-item:hover {
-            background: #f8fafc;
-        }
-
-        .suggestion-item:last-child {
-            border-bottom: none;
-        }
-
-        .suggestion-category {
-            background: var(--tag-neutral);
-            color: white;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .suggestion-icon {
-            color: var(--text-muted);
-            width: 16px;
-        }
-
         /* Main Content */
         .main-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 20px;
+        }
+
+        /* Results Header - Single Line Layout */
+        .results-summary {
+            background: var(--background-color);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .results-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .results-count {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-black);
+        }
+
+        .results-meta {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .sort-select {
+            height: 36px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0 12px;
+            font-size: 14px;
+            min-width: 140px;
+            background: var(--background-color);
         }
 
         /* Filter Sidebar */
@@ -278,7 +269,7 @@
             border-radius: 10px;
         }
 
-        /* Results Container */
+        /* Product Grid */
         .results-container {
             background: var(--background-color);
             border-radius: 12px;
@@ -286,45 +277,6 @@
             overflow: hidden;
         }
 
-        .results-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .results-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .results-count {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--primary-black);
-        }
-
-        .results-meta {
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        .sort-select {
-            height: 36px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0 12px;
-            font-size: 14px;
-            min-width: 140px;
-            background: var(--background-color);
-        }
-
-        /* Product Grid */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -349,7 +301,7 @@
         .product-image {
             width: 100%;
             height: 200px;
-            background: var(--background-color); /* Changed from grey to white */
+            background: var(--background-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -434,27 +386,6 @@
             color: white;
         }
 
-        /* Show More Button - Modern Style */
-        .show-more-btn {
-            background: none;
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .show-more-btn:hover {
-            background: var(--primary-blue);
-            color: white;
-        }
-
         /* Pagination */
         .pagination-container {
             padding: 24px;
@@ -482,31 +413,6 @@
             color: white;
         }
 
-        /* Loading and No Results */
-        .loading-spinner {
-            display: none;
-            text-align: center;
-            padding: 60px;
-        }
-
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-            color: var(--primary-blue);
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 60px 24px;
-            color: var(--text-muted);
-        }
-
-        .no-results i {
-            font-size: 48px;
-            margin-bottom: 16px;
-            display: block;
-        }
-
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .header-content {
@@ -522,7 +428,17 @@
             }
 
             .main-content {
-                padding: 0 16px;
+                padding: 16px;
+            }
+
+            .results-summary {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .results-info {
+                width: 100%;
+                justify-content: space-between;
             }
 
             .filter-sidebar {
@@ -545,17 +461,6 @@
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 16px;
                 padding: 16px;
-            }
-
-            .results-header {
-                padding: 16px;
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .results-info {
-                width: 100%;
-                justify-content: space-between;
             }
         }
 
@@ -603,11 +508,10 @@
             
             <div class="header-search-container">
                 <input type="text" class="header-search" id="mainSearch" 
-                       placeholder="Search products..." autocomplete="off">
+                       placeholder="Search products..." value="Samsung" autocomplete="off">
                 <button class="header-search-btn" id="searchBtn">
                     <i class="fas fa-search"></i>
                 </button>
-                <div class="suggestions-dropdown" id="suggestionsDropdown"></div>
             </div>
             
             <div class="burger-menu">
@@ -624,7 +528,22 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="row mt-4">
+        <!-- Results Summary - Single Line -->
+        <div class="results-summary">
+            <div class="results-info">
+                <span class="results-count">1,247 results</span>
+                <span class="results-meta">Page 1 of 25</span>
+            </div>
+            <select class="sort-select" id="sortSelect">
+                <option value="relevance">Relevance</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="availability">Availability</option>
+                <option value="newest">Newest First</option>
+            </select>
+        </div>
+
+        <div class="row">
             <!-- Left Sidebar Filters -->
             <div class="col-lg-3 col-md-4 mb-4">
                 <div class="filter-sidebar" id="filterSidebar">
@@ -659,10 +578,12 @@
                         <div class="filter-option">
                             <input type="checkbox" id="inStock" value="true">
                             <label for="inStock">In Stock</label>
+                            <span class="filter-count">834</span>
                         </div>
                         <div class="filter-option">
                             <input type="checkbox" id="fastShipping" value="true">
                             <label for="fastShipping">Fast Shipping</label>
+                            <span class="filter-count">567</span>
                         </div>
                     </div>
 
@@ -672,11 +593,26 @@
                             <i class="fas fa-tag"></i>
                             <span>Brand</span>
                         </div>
-                        <div id="brandFilters"></div>
-                        <button class="show-more-btn mt-2" id="showMoreBrands" style="display: none;">
-                            <span>Show more</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
+                        <div class="filter-option">
+                            <input type="checkbox" id="samsung" value="Samsung">
+                            <label for="samsung">Samsung</label>
+                            <span class="filter-count">456</span>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="apple" value="Apple">
+                            <label for="apple">Apple</label>
+                            <span class="filter-count">234</span>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="xiaomi" value="Xiaomi">
+                            <label for="xiaomi">Xiaomi</label>
+                            <span class="filter-count">189</span>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="huawei" value="Huawei">
+                            <label for="huawei">Huawei</label>
+                            <span class="filter-count">123</span>
+                        </div>
                     </div>
 
                     <!-- Category Filter -->
@@ -685,11 +621,21 @@
                             <i class="fas fa-layer-group"></i>
                             <span>Category</span>
                         </div>
-                        <div id="categoryFilters"></div>
-                        <button class="show-more-btn mt-2" id="showMoreCategories" style="display: none;">
-                            <span>Show more</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
+                        <div class="filter-option">
+                            <input type="checkbox" id="smartphones" value="Smartphones">
+                            <label for="smartphones">Smartphones</label>
+                            <span class="filter-count">678</span>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="tablets" value="Tablets">
+                            <label for="tablets">Tablets</label>
+                            <span class="filter-count">234</span>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="accessories" value="Accessories">
+                            <label for="accessories">Accessories</label>
+                            <span class="filter-count">335</span>
+                        </div>
                     </div>
 
                     <!-- Shop Filter -->
@@ -698,49 +644,154 @@
                             <i class="fas fa-store"></i>
                             <span>Shop</span>
                         </div>
-                        <div id="shopFilters"></div>
-                        <button class="show-more-btn mt-2" id="showMoreShops" style="display: none;">
-                            <span>Show more</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
+                        <div class="filter-option">
+                            <input type="checkbox" id="techcenter" value="TechCenter">
+                            <label for="techcenter">TechCenter</label>
+                            <span class="filter-count">456</span>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="electroworld" value="ElectroWorld">
+                            <label for="electroworld">ElectroWorld</label>
+                            <span class="filter-count">389</span>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="digitalgalaxy" value="Digital Galaxy">
+                            <label for="digitalgalaxy">Digital Galaxy</label>
+                            <span class="filter-count">267</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Results Column -->
             <div class="col-lg-9 col-md-8">
-                <!-- Product Results -->
-                <div class="results-container" id="resultsContainer">
-                    <div class="results-header" id="resultsHeader">
-                        <div class="results-info">
-                            <span class="results-count" id="resultsCount">Loading products...</span>
-                            <span class="results-meta" id="resultsMeta"></span>
+                <div class="results-container">
+                    <div class="product-grid">
+                        <!-- Product 1 -->
+                        <div class="product-card" onclick="window.location.href='/product?id=1'">
+                            <div class="product-image">
+                                <div class="placeholder-icon"><i class="fas fa-mobile-alt"></i></div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">Samsung Galaxy S24 Ultra 5G 256GB Titanium Black</div>
+                                <div class="product-price">€899.99</div>
+                                <div class="product-price-range">€899.99 - €1,199.99</div>
+                                <div class="product-shops">
+                                    <span class="shop-count">5 shops</span>
+                                    <span class="availability-tag availability-available">Available</span>
+                                </div>
+                            </div>
                         </div>
-                        <select class="sort-select" id="sortSelect">
-                            <option value="relevance">Relevance</option>
-                            <option value="price_asc">Price: Low to High</option>
-                            <option value="price_desc">Price: High to Low</option>
-                            <option value="availability">Availability</option>
-                            <option value="newest">Newest First</option>
-                        </select>
-                    </div>
 
-                    <div class="loading-spinner" id="loadingSpinner">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
+                        <!-- Product 2 -->
+                        <div class="product-card" onclick="window.location.href='/product?id=2'">
+                            <div class="product-image">
+                                <div class="placeholder-icon"><i class="fas fa-mobile-alt"></i></div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">Samsung Galaxy S24 5G 128GB Phantom Black</div>
+                                <div class="product-price">€679.99</div>
+                                <div class="product-price-range">€679.99 - €749.99</div>
+                                <div class="product-shops">
+                                    <span class="shop-count">8 shops</span>
+                                    <span class="availability-tag availability-available">Available</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mt-3">Searching products...</div>
+
+                        <!-- Product 3 -->
+                        <div class="product-card" onclick="window.location.href='/product?id=3'">
+                            <div class="product-image">
+                                <div class="placeholder-icon"><i class="fas fa-tablet-alt"></i></div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">Samsung Galaxy Tab S9 Ultra 14.6" 256GB WiFi</div>
+                                <div class="product-price">€1,099.99</div>
+                                <div class="product-price-range">€1,099.99 - €1,299.99</div>
+                                <div class="product-shops">
+                                    <span class="shop-count">3 shops</span>
+                                    <span class="availability-tag availability-limited">Limited</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 4 -->
+                        <div class="product-card" onclick="window.location.href='/product?id=4'">
+                            <div class="product-image">
+                                <div class="placeholder-icon"><i class="fas fa-headphones"></i></div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">Samsung Galaxy Buds2 Pro True Wireless Earbuds</div>
+                                <div class="product-price">€149.99</div>
+                                <div class="product-price-range">€149.99 - €229.99</div>
+                                <div class="product-shops">
+                                    <span class="shop-count">12 shops</span>
+                                    <span class="availability-tag availability-available">Available</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 5 -->
+                        <div class="product-card" onclick="window.location.href='/product?id=5'">
+                            <div class="product-image">
+                                <div class="placeholder-icon"><i class="fas fa-laptop"></i></div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">Samsung Galaxy Book3 Pro 16" i7 16GB 512GB</div>
+                                <div class="product-price">€1,499.99</div>
+                                <div class="product-price-range">€1,499.99 - €1,699.99</div>
+                                <div class="product-shops">
+                                    <span class="shop-count">4 shops</span>
+                                    <span class="availability-tag availability-available">Available</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 6 -->
+                        <div class="product-card" onclick="window.location.href='/product?id=6'">
+                            <div class="product-image">
+                                <div class="placeholder-icon"><i class="fas fa-tv"></i></div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-title">Samsung 65" QLED 4K Smart TV QE65Q80C</div>
+                                <div class="product-price">€1,299.99</div>
+                                <div class="product-price-range">€1,299.99 - €1,499.99</div>
+                                <div class="product-shops">
+                                    <span class="shop-count">6 shops</span>
+                                    <span class="availability-tag availability-available">Available</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="no-results" id="noResults" style="display: none;">
-                        <i class="fas fa-search"></i>
-                        <h5>No results found</h5>
-                        <p>Try different search terms or adjust the filters</p>
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <nav aria-label="Search results pagination">
+                            <ul class="pagination">
+                                <li class="page-item disabled">
+                                    <span class="page-link">‹</span>
+                                </li>
+                                <li class="page-item active">
+                                    <span class="page-link">1</span>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=2">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=3">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <span class="page-link">...</span>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=25">25</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=2">›</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
-
-                    <div class="product-grid" id="productGrid"></div>
-
-                    <div class="pagination-container" id="paginationContainer"></div>
                 </div>
             </div>
         </div>
@@ -755,8 +806,67 @@
     <div class="filter-backdrop" id="filterBackdrop"></div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.7.0/dist/nouislider.min.js"></script>
-    <script src="/static/modern-search.js"></script>
+    <script>
+        // Burger menu functionality
+        const burgerBtn = document.getElementById('burgerBtn');
+        const burgerDropdown = document.getElementById('burgerDropdown');
+        
+        if (burgerBtn && burgerDropdown) {
+            burgerBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                burgerDropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!burgerBtn.contains(e.target) && !burgerDropdown.contains(e.target)) {
+                    burgerDropdown.classList.remove('show');
+                }
+            });
+        }
+
+        // Mobile filter functionality
+        const mobileFilterBtn = document.getElementById('mobileFilterBtn');
+        const filterSidebar = document.getElementById('filterSidebar');
+        const filterBackdrop = document.getElementById('filterBackdrop');
+        const closeMobileFilters = document.getElementById('closeMobileFilters');
+
+        if (mobileFilterBtn) {
+            mobileFilterBtn.addEventListener('click', () => {
+                filterSidebar.classList.add('show');
+                filterBackdrop.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        if (filterBackdrop) {
+            filterBackdrop.addEventListener('click', () => {
+                filterSidebar.classList.remove('show');
+                filterBackdrop.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+        }
+
+        if (closeMobileFilters) {
+            closeMobileFilters.addEventListener('click', () => {
+                filterSidebar.classList.remove('show');
+                filterBackdrop.style.display = 'none';
+                document.body.style.overflow = '';
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const searchTerm = document.getElementById('mainSearch').value;
+            if (searchTerm) {
+                window.location.href = `/results?q=${encodeURIComponent(searchTerm)}`;
+            }
+        });
+
+        document.getElementById('mainSearch').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+    </script>
 </body>
 </html>

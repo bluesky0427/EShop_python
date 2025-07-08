@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Market.gr</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            /* Blue shades for design/elements */
+            --primary-blue: #2563eb;
+            --secondary-blue: #3b82f6;
+            
+            /* Black shades for fonts */
+            --primary-black: #1f2937;
+            --secondary-black: #374151;
+            
+            /* Tag colors */
+            --tag-positive: #10b981;
+            --tag-negative: #ef4444;
+            --tag-neutral: #f59e0b;
+            
+            /* System colors */
+            --background-color: #ffffff;
+            --border-color: #e5e7eb;
+            --text-muted: #6b7280;
+            --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f9fafb;
+            color: var(--primary-black);
+            line-height: 1.6;
+        }
+
+        /* Header Styles - Same as homepage */
+        .main-header {
+            background: var(--background-color);
+            padding: 12px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            margin: 0;
+        }
+
+        .header-search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 40px;
+            position: relative;
+        }
+
+        .header-search {
+            width: 100%;
+            height: 44px;
+            border: 2px solid var(--border-color);
+            border-radius: 22px;
+            padding: 0 50px 0 20px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .header-search:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .header-search-btn {
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            border: none;
+            background: var(--primary-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .header-search-btn:hover {
+            background: var(--secondary-blue);
+        }
+
+        .burger-menu {
+            position: relative;
+        }
+
+        .burger-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .burger-btn:hover {
+            background: var(--secondary-blue);
+        }
+
+        .burger-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 8px 0;
+            min-width: 140px;
+            z-index: 1000;
+            display: none;
+            margin-top: 8px;
+        }
+
+        .burger-dropdown.show {
+            display: block;
+        }
+
+        .burger-dropdown a {
+            display: block;
+            padding: 12px 16px;
+            color: var(--primary-black);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .burger-dropdown a:hover {
+            background: #f3f4f6;
+            color: var(--primary-blue);
+        }
+
+        /* About Page Specific Styles */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero-section {
+            background: var(--background-color);
+            border-radius: 12px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--secondary-black);
+            margin-bottom: 30px;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .features-section {
+            margin-bottom: 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--background-color);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 20px;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-black);
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .stats-section {
+            background: var(--background-color);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .stats-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-black);
+            margin-bottom: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .contact-section {
+            background: var(--background-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .contact-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-black);
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: #f3f4f6;
+            color: var(--primary-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .contact-details h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-black);
+            margin: 0 0 5px 0;
+        }
+
+        .contact-details p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+                padding: 0 16px;
+            }
+
+            .header-search-container {
+                margin: 0;
+                max-width: none;
+                width: 100%;
+            }
+
+            .main-content {
+                padding: 16px;
+            }
+
+            .hero-section {
+                padding: 40px 20px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .stats-section {
+                padding: 30px 20px;
+            }
+
+            .contact-section {
+                padding: 30px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .feature-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <a href="/" class="logo">Market.gr</a>
+            
+            <div class="header-search-container">
+                <input type="text" class="header-search" id="mainSearch" 
+                       placeholder="Search products..." autocomplete="off">
+                <button class="header-search-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="burger-menu">
+                <button class="burger-btn" id="burgerBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="burger-dropdown" id="burgerDropdown">
+                    <a href="/admin" target="_blank">Admin</a>
+                    <a href="/about">About</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">About Market.gr</h1>
+            <p class="hero-subtitle">Your trusted price comparison platform</p>
+            <p class="hero-description">
+                Market.gr is Greece's leading price comparison platform, helping consumers find the best deals 
+                across thousands of online stores. We make shopping smarter by providing real-time price 
+                comparisons, availability tracking, and comprehensive product information all in one place.
+            </p>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="feature-title">Smart Search</h3>
+                    <p class="feature-description">
+                        Our advanced search engine helps you find exactly what you're looking for across 
+                        thousands of products from hundreds of verified online stores.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Real-time Prices</h3>
+                    <p class="feature-description">
+                        Get up-to-date pricing information updated multiple times daily to ensure you're 
+                        always seeing the latest deals and offers.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Verified Shops</h3>
+                    <p class="feature-description">
+                        Shop with confidence knowing that all our partner stores are verified and rated by 
+                        real customers for reliability and service quality.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile Optimized</h3>
+                    <p class="feature-description">
+                        Access Market.gr from any device with our fully responsive design that works 
+                        perfectly on desktop, tablet, and mobile.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced Filters</h3>
+                    <p class="feature-description">
+                        Narrow down your search with our comprehensive filtering system including price range, 
+                        brand, availability, and more.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="feature-title">Always Free</h3>
+                    <p class="feature-description">
+                        Market.gr is completely free for consumers. We believe everyone deserves access to 
+                        the best deals without any hidden costs.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h2 class="stats-title">Market.gr by the Numbers</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">2.5M+</div>
+                    <div class="stat-label">Products Tracked</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Partner Stores</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Monthly Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">€50M+</div>
+                    <div class="stat-label">Savings Generated</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2 class="contact-title">Get in Touch</h2>
+            <p style="color: var(--text-muted); margin-bottom: 0;">
+                Have questions, suggestions, or want to partner with us? We'd love to hear from you.
+            </p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Email</h4>
+                        <p>hello@market.gr</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Phone</h4>
+                        <p>+30 210 123 4567</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Address</h4>
+                        <p>Athens, Greece</p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h4>Partnerships</h4>
+                        <p>partners@market.gr</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Burger menu functionality
+        const burgerBtn = document.getElementById('burgerBtn');
+        const burgerDropdown = document.getElementById('burgerDropdown');
+        
+        if (burgerBtn && burgerDropdown) {
+            burgerBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                burgerDropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!burgerBtn.contains(e.target) && !burgerDropdown.contains(e.target)) {
+                    burgerDropdown.classList.remove('show');
+                }
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const searchTerm = document.getElementById('mainSearch').value;
+            if (searchTerm) {
+                window.location.href = `/results?q=${encodeURIComponent(searchTerm)}`;
+            }
+        });
+
+        document.getElementById('mainSearch').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+    </script>
+</body>
+</html>

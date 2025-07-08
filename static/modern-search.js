@@ -270,12 +270,35 @@ class ModernSearchApp {
             return;
         }
 
-        this.suggestionsDropdown.innerHTML = suggestions.map(suggestion => `
-            <div class="suggestion-item" onclick="app.selectSuggestion('${suggestion.replace(/'/g, "\\'")}')">
-                <i class="fas fa-search suggestion-icon"></i>
-                <span>${suggestion}</span>
-            </div>
-        `).join('');
+        // Create category suggestions (first 2-3 items)
+        const categorySuggestions = [
+            { text: 'Samsung - TV', type: 'category' },
+            { text: 'Samsung - Mobile Phones', type: 'category' },
+            { text: 'Samsung - Laptops', type: 'category' }
+        ];
+
+        // Combine category suggestions with regular suggestions
+        const allSuggestions = [...categorySuggestions.slice(0, 3), ...suggestions.slice(0, 5)];
+
+        this.suggestionsDropdown.innerHTML = allSuggestions.map(suggestion => {
+            if (typeof suggestion === 'object' && suggestion.type === 'category') {
+                return `
+                    <div class="suggestion-item" onclick="app.selectSuggestion('${suggestion.text.replace(/'/g, "\\'")}')">
+                        <i class="fas fa-layer-group suggestion-icon"></i>
+                        <span>${suggestion.text}</span>
+                        <span class="suggestion-category">Category</span>
+                    </div>
+                `;
+            } else {
+                const suggestionText = typeof suggestion === 'string' ? suggestion : suggestion.text;
+                return `
+                    <div class="suggestion-item" onclick="app.selectSuggestion('${suggestionText.replace(/'/g, "\\'")}')">
+                        <i class="fas fa-search suggestion-icon"></i>
+                        <span>${suggestionText}</span>
+                    </div>
+                `;
+            }
+        }).join('');
 
         this.suggestionsDropdown.style.display = 'block';
     }
@@ -465,7 +488,7 @@ class ModernSearchApp {
         const categoryName = product.category ? (product.category.name || product.category) : '';
 
         return `
-            <div class="product-card" onclick="app.showProductDetails(${product.id})">
+            <div class="product-card" onclick="window.location.href='/product?id=${product.id}'">
                 <div class="product-image">
                     ${imageContent}
                 </div>
@@ -874,185 +897,10 @@ class ModernSearchApp {
         this.updateFilters();
     }
 
-    async showProductDetails(productId) {
-        try {
-            console.log('Show product details for:', productId);
+    // Product details now handled by dedicated product page (/product?id=...)
+    // Removed popup modal functionality as per requirements
 
-            // Show modal with loading state
-            const modal = new bootstrap.Modal(document.getElementById('productModal'));
-            const modalBody = document.getElementById('productModalBody');
-
-            modalBody.innerHTML = `
-                <div class="text-center">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-2">Loading product details...</p>
-                </div>
-            `;
-
-            modal.show();
-
-            // Try to get product details from API
-            let product = null;
-            try {
-                const response = await fetch(`/product/${productId}`);
-                if (response.ok) {
-                    product = await response.json();
-                }
-            } catch (error) {
-                console.log('API endpoint not available, using search data');
-            }
-
-            // If API fails, find product in current search results
-            if (!product) {
-                const productCards = document.querySelectorAll('.product-card');
-                let foundProduct = null;
-
-                // Search through current results to find matching product
-                const allProducts = Array.from(productCards).map(card => {
-                    const title = card.querySelector('.product-title')?.textContent || '';
-                    const price = card.querySelector('.product-price')?.textContent || '';
-                    const availability = card.querySelector('.product-availability')?.textContent || '';
-                    const shop = card.querySelector('.product-shop')?.textContent || '';
-                    const image = card.querySelector('.product-image img')?.src || '';
-
-                    return {
-                        id: productId,
-                        title,
-                        price,
-                        availability: availability.includes('Available'),
-                        shop: shop,
-                        image_url: image,
-                        description: 'Product details from current search results'
-                    };
-                });
-
-                product = allProducts[0]; // Use first product as fallback
-            }
-
-            // Display product details
-            if (product) {
-                this.displayProductModal(product);
-            } else {
-                modalBody.innerHTML = `
-                    <div class="alert alert-warning">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        Product details not available
-                    </div>
-                `;
-            }
-
-        } catch (error) {
-            console.error('Error showing product details:', error);
-            document.getElementById('productModalBody').innerHTML = `
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-circle me-2"></i>
-                    Error loading product details: ${error.message}
-                </div>
-            `;
-        }
-    }
-
-    displayProductModal(product) {
-        const modalBody = document.getElementById('productModalBody');
-        const modalTitle = document.getElementById('productModalLabel');
-
-        modalTitle.textContent = product.title || 'Product Details';
-
-        const imageUrl = product.image_url && product.image_url !== 'https://via.placeholder.com/200x150?text=No+Image' 
-            ? product.image_url 
-            : null;
-
-        const price = product.price ? 
-            (typeof product.price === 'string' ? product.price : `€${product.price.toFixed(2)}`) 
-            : 'Price not available';
-
-        const originalPrice = product.original_price && product.original_price > parseFloat(product.price) ? 
-            `<del class="text-muted ms-2">€${product.original_price.toFixed(2)}</del>` : '';
-
-        const discount = product.original_price && product.original_price > parseFloat(product.price) ?
-            `<span class="badge bg-warning text-dark ms-2">-${Math.round(((product.original_price - parseFloat(product.price)) / product.original_price) * 100)}%</span>` : '';
-
-        const availability = product.availability || product.availability === true ? 
-            '<span class="badge bg-success">Available</span>' : 
-            '<span class="badge bg-danger">Out of Stock</span>';
-
-        modalBody.innerHTML = `
-            <div class="row">
-                <div class="col-md-5">
-                    ${imageUrl ? 
-                        `<img src="${imageUrl}" class="img-fluid rounded" alt="${product.title}" style="width: 100%; max-height: 300px; object-fit: contain;">` :
-                        `<div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 300px;">
-                            <i class="fas fa-image fa-3x text-muted"></i>
-                        </div>`
-                    }
-                </div>
-                <div class="col-md-7">
-                    <h5 class="mb-3">${product.title}</h5>
-
-                    ${product.description ? `<p class="text-muted mb-3">${product.description}</p>` : ''}
-
-                    <div class="mb-3">
-                        <h4 class="text-primary mb-1">
-                            ${price}
-                            ${originalPrice}
-                            ${discount}
-                        </h4>
-                    </div>
-
-                    <div class="mb-3">
-                        <strong>Availability:</strong> ${availability}
-                    </div>
-
-                    ${product.stock_quantity ? `
-                        <div class="mb-3">
-                            <strong>Stock:</strong> ${product.stock_quantity} units
-                        </div>
-                    ` : ''}
-
-                    ${product.brand ? `
-                        <div class="mb-3">
-                            <strong>Brand:</strong> ${typeof product.brand === 'object' ? product.brand.name : product.brand}
-                        </div>
-                    ` : ''}
-
-                    ${product.shop ? `
-                        <div class="mb-3">
-                            <strong>Shop:</strong> ${typeof product.shop === 'object' ? product.shop.name : product.shop}
-                        </div>
-                    ` : ''}
-
-                    ${product.category ? `
-                        <div class="mb-3">
-                            <strong>Category:</strong> ${typeof product.category === 'object' ? product.category.name : product.category}
-                        </div>
-                    ` : ''}
-
-                    ${product.ean ? `
-                        <div class="mb-3">
-                            <strong>EAN:</strong> ${product.ean}
-                        </div>
-                    ` : ''}
-
-                    ${product.mpn ? `
-                        <div class="mb-3">
-                            <strong>MPN:</strong> ${product.mpn}
-                        </div>
-                    ` : ''}
-
-                    ${product.product_url ? `
-                        <div class="mt-4">
-                            <a href="${product.product_url}" target="_blank" class="btn btn-primary">
-                                <i class="fas fa-external-link-alt me-2"></i>
-                                View on Store
-                            </a>
-                        </div>
-                    ` : ''}
-                </div>
-            </div>
-        `;
-    }
+    // displayProductModal method removed - using dedicated product page instead
 
     showMobileFilters() {
         this.filterSidebar.classList.add('show');
@@ -1141,7 +989,7 @@ class ModernSearchApp {
             `From: €${product.min_price?.toFixed(2) || 'N/A'}`;
 
         return `
-            <div class="product-card aggregated" onclick="app.showProductDetails(${product.product_ids[0]})">
+            <div class="product-card aggregated" onclick="window.location.href='/product?id=${product.product_ids[0]}'">
                 <img src="${product.image_url || '/static/placeholder.jpg'}" alt="${product.title}" loading="lazy">
                 <div class="product-info">
                     <h3 class="product-title">${product.title}</h3>
